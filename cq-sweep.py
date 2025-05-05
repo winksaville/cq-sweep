@@ -3,33 +3,35 @@
 import cadquery as cq
 from cadquery.vis import show
 import sys
+import argparse
 
-if len(sys.argv) <= 1 or len(sys.argv) > 3:
-    print("Usage: cq-sweep.py pts=<list> tangents=<list>")
-    print('Example: cq-sweep.py pts="[(0,0,0),(10,0,10)]" tangents="[(0,0,1),(10,0,10)]"')
-    print(" Note: Order doesn't matter and tangents are optional.")
+argparse = argparse.ArgumentParser(description="Sweep a cylinder along a path defined by points and optional tangents.")
+argparse.add_argument(
+    "-p","--pts",
+    type=str,
+    help="List of points defining the path. Example: --pts='[(0,0,0),(10,0,10)]'",
+)
+argparse.add_argument(
+    "-t","--tangents",
+    type=str,
+    default=None,
+    help="List of tangents for the path. Example: --tangents='[(0,0,1),(10,0,20)]'",
+)
+args = argparse.parse_args()
 
+# Check if the script is run with the correct number of arguments
+if args.pts is None:
+    print("No points provided.")
     sys.exit(1)
 
-# Parse the arguments
-for arg in sys.argv[1:]:
-    if "=" not in arg:
-        print(f"Invalid argument: {arg}")
-        sys.exit(1)
-    key, value = arg.split("=")
-    if key == "pts":
-        pts = eval(value)
-    elif key == "tangents":
-        tangents = eval(value)
-    else:
-        print(f"Unknown argument: {key}")
-        sys.exit(1)
-
-print(f"pts: {pts}")
-print(f"tangents: {tangents}")
+pts = eval(args.pts)
+if args.tangents is not None:
+    tangents = eval(args.tangents)
+else:
+    tangents = None
 
 path = cq.Workplane("XY").spline(pts, tangents)
 
 # Create a cylinder with a radius of 0.5 along the path
 cylinder = cq.Workplane("XY").circle(0.5).sweep(path)
-show(cylinder)
+show(cylinder, title=f"pts: {pts}, tangents: {tangents}")
