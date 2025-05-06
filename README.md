@@ -24,29 +24,42 @@ options:
 
 ## Example
 
-Straight cylinder along a path defined by points.
+Straight cylinder along a 45 degree spline with no tangents.
+The top anf bottom faces appear to be parallel to each other.
 ```bash
 $ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]"
 ```
 
+![straight cylinder at an angle](./spline-45-degs_cylinder_top-no-tangents_faces-parallel.png)
 
-![straight cylinder at an angle](./cylinder-straight-at-angle.png)
-
-Curved cylinder along a path defined by points and tangents.
-The odd thing is that the top face of the cylinder is not parallel to the
-bottom face of the cylinder.
+Curved cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom and top faces.
 ```bash
-$ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" --tangents="[(0,0,1),(10,0,20)]"
+$ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" --tangents="[(0,0,1),(10,0,11)]"
 ```
-![curved cylinder at an angle](./cylinder-curved-at-angle.png)
+![curved cylinder at an angle](./spline-45-degs_cylinder_top-1-unit-vert-tan_bottom-1-unit-vert-tan_faces-45-degs.png)
 
-Curved cylinder along a path defined by points and tangents
-with top and bottom faces parallel to each other. This was
-accomplished by using the a horzonital tangent, which is odd.
+Curved cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom face
+and a 1 unit horizontal tangle for the top face
+```bash
+$ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" --tangents="[(0,0,1),(9,0,10)]"
+```
+![curved cylinder at an angle](./spline-45-degs_cylinder_top-1-unit-hori-tan_bottom-1-unit-hori-tan_faces-45-degs.png)
+
+Curved cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom face
+and a 10 unit long horizontal tangent for the bottom face.
+The top and bottom faces "appear" to be parallel to each other.
 ```bash
 $ ./cq-sweep.py -p="[(0,0,0),(10,0,10)]" -t="[(0,0,1),(0,0,10)]"
 ```
-![curved cylinder at an angle](./cylinder-curved-at-angle-parallel-top-bottom.png)
+![curved cylinder at an angle](./spline-45-degs_cylinder_top-1-unit-vert-tan_bottom-10-unit-hori-tan_faces-parallel.png)
+
+Curved cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom face
+and a 10 unit long vertical tangent for the bottom face.
+The top and bottom faces "appear" to be perpendicular to each other.
+```bash
+$ ./cq-sweep.py -p="[(0,0,0),(10,0,10)]" -t="[(0,0,1),(10,0,0)]"
+```
+![curved cylinder at an angle](./spline-45-degs_cylinder_top-1-unit-vert-tan_bottom-10-unit-vert-tan_faces-perpendicular.png)
 
 ## License
 
