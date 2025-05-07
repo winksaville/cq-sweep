@@ -35,6 +35,8 @@ $ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]"
 Curved cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom and top faces.
 ```bash
 $ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" --tangents="[(0,0,1),(10,0,11)]"
+Top face angles: {'XY': 42.27368900609325, 'XZ': 90.00000000000047, 'YZ': 47.72631099390675}
+Bottom face angles: {'XY': 179.99999999999997, 'XZ': 89.99999999999997, 'YZ': 89.99999999999999}
 ```
 ![curved cylinder at an angle](./spline-45-degs_cylinder_top-1-unit-vert-tan_bottom-1-unit-vert-tan_faces-45-degs.png)
 
@@ -42,6 +44,8 @@ Curved cylinder along a 45 degree spline with 1 unit long vertical tangents for 
 and a 1 unit horizontal tangle for the top face
 ```bash
 $ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" --tangents="[(0,0,1),(9,0,10)]"
+Top face angles: {'XY': 41.987212495815804, 'XZ': 90.00000000000044, 'YZ': 48.012787504184196}
+Bottom face angles: {'XY': 180.0, 'XZ': 90.0, 'YZ': 90.0}
 ```
 ![curved cylinder at an angle](./spline-45-degs_cylinder_top-1-unit-hori-tan_bottom-1-unit-hori-tan_faces-45-degs.png)
 
@@ -50,6 +54,8 @@ and a 10 unit long horizontal tangent for the bottom face.
 The top and bottom faces "appear" to be parallel to each other.
 ```bash
 $ ./cq-sweep.py -p="[(0,0,0),(10,0,10)]" -t="[(0,0,1),(0,0,10)]"
+Top face angles: {'XY': 2.0349084617646358e-13, 'XZ': 90.0, 'YZ': 90.0000000000002}
+Bottom face angles: {'XY': 179.99999999999994, 'XZ': 90.0, 'YZ': 90.00000000000006}
 ```
 ![curved cylinder at an angle](./spline-45-degs_cylinder_top-1-unit-vert-tan_bottom-10-unit-hori-tan_faces-parallel.png)
 
@@ -58,6 +64,8 @@ and a 10 unit long vertical tangent for the bottom face.
 The top and bottom faces "appear" to be perpendicular to each other.
 ```bash
 $ ./cq-sweep.py -p="[(0,0,0),(10,0,10)]" -t="[(0,0,1),(10,0,0)]"
+Top face angles: {'XY': 89.99999999999987, 'XZ': 90.00000000000047, 'YZ': 4.892543547122269e-13}
+Bottom face angles: {'XY': 180.0, 'XZ': 90.0, 'YZ': 90.0}
 ```
 ![curved cylinder at an angle](./spline-45-degs_cylinder_top-1-unit-vert-tan_bottom-10-unit-vert-tan_faces-perpendicular.png)
 
