@@ -4,8 +4,75 @@ Explore using cadquery workplane.sweep which sweeps along a spline.
 Using https://github.com/CadQuery/cadquery/blob/v2.5.2/examples/Ex023_Sweep.py as a base.
 
 
-Setup a python virtual environment and install the dependencies for
-cadquery v2.5.2, see enviroment.yml for the dependencies.
+## Install
+<!-- This section was produced by ChatGPT4.5. -->
+
+This project uses a Makefile to simplify the installation process.
+The Makefile automates the creation of a Conda environment, installation
+of dependencies, and verification of the installation.
+
+The following instructions will guide you through the installation process.
+
+### Prerequisites
+- **Python**: Python 3.10, 3.11, 3.12 (Python >3.12 is not yet supported).
+- **Conda/Mamba**: Install [Mambaforge](https://github.com/conda-forge/miniforge#mambaforge) (recommended). If using Anaconda/Miniconda instead, you can use `conda` in place of `mamba` for the steps below.
+- **Git**: Ensure Git is installed (to clone the repository).
+
+### Installation Steps
+
+1. **Clone this repository** and navigate into it:
+    ~~~bash
+    git clone <REPO_URL>
+    cd <REPO_DIRECTORY>
+    ~~~
+    *(All commands below assume you are working inside this repository directory.)*
+
+2. **Create a new Conda environment** for the project using **mamba** and the provided `environment.yml`:
+    ~~~bash
+    mamba env create -n cadquery-env -f environment.yml
+    ~~~
+    *If you don't have `mamba`, use `conda` instead:*
+    ~~~bash
+    conda env create -n cadquery-env -f environment.yml
+    ~~~
+    This will create an environment named `cadquery-env` (you can choose a different name by replacing `cadquery-env`).
+
+3. **Activate the environment**:
+    ~~~bash
+    conda activate cadquery-env
+    ~~~
+
+4. **Install CadQuery** (choose one of the following options):
+    - **Use CadQuery from conda-forge (default):** CadQuery should already be installed in the new environment (via the environment file). If not, install it with:
+      ~~~bash
+      mamba install -c conda-forge cadquery
+      ~~~
+      *(Use `conda install` if you don't have mamba.)*
+    - **Use a local CadQuery source (optional, for development):** Clone and install CadQuery from source:
+      ~~~bash
+      make clone-local   # clone the CadQuery repository into ./cadquery
+      make install-local # install the local CadQuery into the environment
+      ~~~
+      This will override the conda-forge installation with your local version of CadQuery.
+
+5. **Verify the installation**:
+    ~~~bash
+    make verify
+    ~~~
+    This will run a quick test (import CadQuery and print its version) to confirm everything is set up correctly.
+
+6. **Clean up** (optional):
+    ~~~bash
+    make clean
+    ~~~
+    This removes the `cadquery-env` environment, allowing you to start fresh if needed.
+
+### Makefile Targets Summary
+- **`make`** – Creates the Conda environment (if not already created) and installs all dependencies (including CadQuery via conda-forge).
+- **`make clone-local`** – Clones the official CadQuery repository into a `cadquery/` subfolder for using a development version.
+- **`make install-local`** – Installs CadQuery from the local `cadquery/` source into the environment (overriding any existing CadQuery installation).
+- **`make verify`** – Activates the environment and runs a test script to verify that CadQuery is installed and functioning (e.g. imports CadQuery and prints its version).
+- **`make clean`** – Deletes the Conda environment created for this project (so you can re-run the installation from scratch).
 
 ## Usage
 

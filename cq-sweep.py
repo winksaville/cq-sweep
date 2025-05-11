@@ -5,6 +5,7 @@ from cadquery.vis import show
 import sys
 import argparse
 import math
+print(f"cadquery.__file__={cq.__file__} version={cq.__version__}")
 
 default_mid_location = 0.5
 default_base_radius = 0.5
@@ -39,6 +40,24 @@ argparse.add_argument(
     type=str,
     default=None,
     help="List of tangents for the path. Example: --tangents='[(0,0,1),(10,0,20)]'",
+)
+argparse.add_argument(
+    "-r","--roll",
+    type=float,
+    default=180,
+    help="Roll angle. Example: --roll=90",
+)
+argparse.add_argument(
+    "-oas","--output-ascii-stl",
+    type=str,
+    default=None,
+    help="Output an ASCII stl file. Example: --output-ascii-stl=filename' result is 'filename.stl'",
+)
+argparse.add_argument(
+    "-opng","--output-png",
+    type=str,
+    default=None,
+    help="Output as `.png` screenshot. Example: --output-png=filename' result is 'filename.png'",
 )
 args = argparse.parse_args()
 
@@ -103,4 +122,32 @@ bottom_face_angles = {
 }
 print(f"Bottom face angles: {bottom_face_angles}")
 
-show(shape, title=f"pts: {pts}, tangents: {tangents}, angles XY:{top_face_angles["XY"]:.2f}, XZ:{top_face_angles["XZ"]:.2f}, YZ:{top_face_angles["YZ"]:.2f}")
+if args.output_ascii_stl:
+    # Export as ASCII STL
+    cq.Assembly(shape).export(f"{args.output_ascii_stl}.stl", exportType="STL", ascii=True)
+
+#This has commas in it so not a great file name
+#add_ons=f"p-{pts}_t-{tangents}_angles_XY_{top_face_angles["XY"]:.2f}_XZ_{top_face_angles["XZ"]:.2f}_YZ_{top_face_angles["YZ"]:.2f}"
+# Show with optionally saving as PNG
+if args.output_png:
+    focus_loc = middle_loc[0].toTuple()[0]
+    camera_x = focus_loc[0]
+    camera_y = -20
+    camera_z = focus_loc[2]
+    print(f"roll={args.roll:.2f}, focus_loc={focus_loc}, camera_x={camera_x:.2f}, camera_y={camera_y:.2f}, camera_z={camera_z:.2f}")
+    show(
+        shape,
+        title=f"pts: {pts}, tangents: {tangents}, angles XY:{top_face_angles["XY"]:.2f}, XZ:{top_face_angles["XZ"]:.2f}, YZ:{top_face_angles["YZ"]:.2f}",
+        width=800,
+        height=600,
+        roll=args.roll,
+        position=(camera_x, camera_y, camera_z),
+        focus=focus_loc,
+        zoom=1,
+        interact=True,
+        #screenshot=f"{args.output_png}_{add_ons}.png",
+        screenshot=f"{args.output_png}.png",
+    )
+else:
+    show(shape, title=f"pts: {pts}, tangents: {tangents}, angles XY:{top_face_angles["XY"]:.2f}, XZ:{top_face_angles["XZ"]:.2f}, YZ:{top_face_angles["YZ"]:.2f}")
+

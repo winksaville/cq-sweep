@@ -4,4 +4,4 @@ channels:
  - nodefaults
 dependencies:
   - python ==3.12
-  - cadquery >=2.5
+  - cadquery >=2.6
