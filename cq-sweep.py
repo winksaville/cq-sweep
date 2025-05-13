@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Initijally based on https://github.com/CadQuery/cadquery/blob/master/examples/Ex023_Sweep.py
+# Initially based on https://github.com/CadQuery/cadquery/blob/master/examples/Ex023_Sweep.py
 try:
     import cadquery as cq
     from cadquery.vis import show
