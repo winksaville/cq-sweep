@@ -1,11 +1,18 @@
 #!/usr/bin/env python
-# Initially based on https://github.com/CadQuery/cadquery/blob/master/examples/Ex023_Sweep.py
-import cadquery as cq
-from cadquery.vis import show
+# Initijally based on https://github.com/CadQuery/cadquery/blob/master/examples/Ex023_Sweep.py
+try:
+    import cadquery as cq
+    from cadquery.vis import show
+except ImportError:
+    print("Err: CadQuery is not available, it is a submodule")
+    print("     run `git submodule init` and `direnv allow` and")
+    print("     try to execute cq-sweep again")
+    exit(1)
+
 import sys
 import argparse
 import math
-print(f"cadquery.__file__={cq.__file__} version={cq.__version__}")
+#print(f"cadquery.__file__={cq.__file__} version={cq.__version__}")
 
 default_mid_location = 0.5
 default_base_radius = 0.5
@@ -77,9 +84,9 @@ path = cq.Workplane("XY").spline(pts, tangents)
 bottom_loc = [path.val().locationAt(0)]
 middle_loc = [path.val().locationAt(args.mid_location)]
 top_loc = [path.val().locationAt(1)]
-print(f"Bottom location: {bottom_loc[0].toTuple()}")
-print(f"middle location: {middle_loc[0].toTuple()}")
-print(f"top location: {top_loc[0].toTuple()}")
+#print(f"Bottom location: {bottom_loc[0].toTuple()}")
+#print(f"middle location: {middle_loc[0].toTuple()}")
+#print(f"top location: {top_loc[0].toTuple()}")
 
 base_radius = 0.5
 middle_radius = 0.5
@@ -126,28 +133,26 @@ if args.output_ascii_stl:
     # Export as ASCII STL
     cq.Assembly(shape).export(f"{args.output_ascii_stl}.stl", exportType="STL", ascii=True)
 
-#This has commas in it so not a great file name
-#add_ons=f"p-{pts}_t-{tangents}_angles_XY_{top_face_angles["XY"]:.2f}_XZ_{top_face_angles["XZ"]:.2f}_YZ_{top_face_angles["YZ"]:.2f}"
-# Show with optionally saving as PNG
+# Show the shape in the viewer
+show(shape, width=800, height=600, title=f"pts: {pts}, tangents: {tangents}, angles XY:{top_face_angles["XY"]:.2f}, XZ:{top_face_angles["XZ"]:.2f}, YZ:{top_face_angles["YZ"]:.2f}")
+
+# Write the shape to a file if output_png is specified
 if args.output_png:
     focus_loc = middle_loc[0].toTuple()[0]
     camera_x = focus_loc[0]
     camera_y = -20
     camera_z = focus_loc[2]
-    print(f"roll={args.roll:.2f}, focus_loc={focus_loc}, camera_x={camera_x:.2f}, camera_y={camera_y:.2f}, camera_z={camera_z:.2f}")
+    #print(f"roll={args.roll:.2f}, focus_loc={focus_loc}, camera_x={camera_x:.2f}, camera_y={camera_y:.2f}, camera_z={camera_z:.2f}")
     show(
         shape,
-        title=f"pts: {pts}, tangents: {tangents}, angles XY:{top_face_angles["XY"]:.2f}, XZ:{top_face_angles["XZ"]:.2f}, YZ:{top_face_angles["YZ"]:.2f}",
         width=800,
         height=600,
         roll=args.roll,
         position=(camera_x, camera_y, camera_z),
+        viewup=(0, 0, 1),
         focus=focus_loc,
-        zoom=1,
-        interact=True,
-        #screenshot=f"{args.output_png}_{add_ons}.png",
+        zoom=0.9,
+        interact=False,
         screenshot=f"{args.output_png}.png",
     )
-else:
-    show(shape, title=f"pts: {pts}, tangents: {tangents}, angles XY:{top_face_angles["XY"]:.2f}, XZ:{top_face_angles["XZ"]:.2f}, YZ:{top_face_angles["YZ"]:.2f}")
 

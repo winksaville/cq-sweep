@@ -78,27 +78,40 @@ The following instructions will guide you through the installation process.
 
 ```bash
 $ ./cq-sweep.py -h
-usage: cq-sweep.py [-h] [-p PTS] [-t TANGENTS]
+usage: cq-sweep.py [-h] [-br BASE_RADIUS] [-tr TOP_RADIUS] [-ml MID_LOCATION] [-p PTS] [-t TANGENTS] [-r ROLL] [-oas OUTPUT_ASCII_STL]
+                   [-opng OUTPUT_PNG]
 
 Sweep a cylinder along a path defined by points and optional tangents.
 
 options:
   -h, --help            show this help message and exit
-  -p PTS, --pts PTS     List of points defining the path. Example: --pts='[(0,0,0),(10,0,10)]'
-  -t TANGENTS, --tangents TANGENTS
-                        List of tangents for the path. Example: --tangents='[(0,0,1),(10,0,10)]'
+  -br, --base_radius BASE_RADIUS
+                        Base radius of the cylinder. Example: --base_radius=0.5
+  -tr, --top_radius TOP_RADIUS
+                        Top radius of the cylinder. Example: --top_radius=0.15
+  -ml, --mid_location MID_LOCATION
+                        Location of mid section where transition begins to top_radius. value between 0..1. Example: --mid_location=0.5
+  -p, --pts PTS         List of points defining the path. Example: --pts='[(0,0,0),(10,0,10)]'
+  -t, --tangents TANGENTS
+                        List of tangents for the path. Example: --tangents='[(0,0,1),(10,0,20)]'
+  -r, --roll ROLL       Roll angle. Example: --roll=90
+  -oas, --output-ascii-stl OUTPUT_ASCII_STL
+                        Output an ASCII stl file. Example: --output-ascii-stl=filename' result is 'filename.stl'
+  -opng, --output-png OUTPUT_PNG
+                        Output as `.png` screenshot. Example: --output-png=filename' result is 'filename.png'
 ```
 
 ## Example
 
 Straight cylinder along a 45 degree spline with no tangents.
-The top anf bottom faces appear to be parallel to each other.
 ```bash
-$ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]"
+$ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" -opng="spline-45-degs_cylinder_top-no-tangents_faces-parallel"
+Top face angles: {'XY': 44.99999999999991, 'XZ': 89.9999999999999, 'YZ': 45.00000000000009}
+Bottom face angles: {'XY': 134.99999999999997, 'XZ': 89.99999999999999, 'YZ': 135.00000000000003}
 ```
-
 ![straight cylinder at an angle](./spline-45-degs_cylinder_top-no-tangents_faces-parallel.png)
 
+---
 Curved cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom and top faces.
 ```bash
 $ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" --tangents="[(0,0,1),(10,0,11)]"
@@ -116,6 +129,7 @@ Bottom face angles: {'XY': 180.0, 'XZ': 90.0, 'YZ': 90.0}
 ```
 ![curved cylinder at an angle](./spline-45-degs_cylinder_top-1-unit-hori-tan_bottom-1-unit-hori-tan_faces-45-degs.png)
 
+---
 Curved cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom face
 and a 10 unit long horizontal tangent for the bottom face.
 The top and bottom faces "appear" to be parallel to each other.
@@ -126,6 +140,7 @@ Bottom face angles: {'XY': 179.99999999999994, 'XZ': 90.0, 'YZ': 90.000000000000
 ```
 ![curved cylinder at an angle](./spline-45-degs_cylinder_top-1-unit-vert-tan_bottom-10-unit-hori-tan_faces-parallel.png)
 
+---
 Curved cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom face
 and a 10 unit long vertical tangent for the bottom face.
 The top and bottom faces "appear" to be perpendicular to each other.
