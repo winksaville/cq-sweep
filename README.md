@@ -142,7 +142,7 @@ Partial-S shaped tapered cylinder along a 45 degree spline with 1 unit long vert
 
 Result:
  - Top face is about 45 degrees to the XY and YZ planes and perpendicular to XZ plane.
- - bottom face is parallel to XY and about perpendicular to the XZ and YZ planes.
+ - bottom face is parallel to XY and perpendicular to XZ and YZ planes.
 ```bash
 $ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" --tangents="[(0,0,1),(10,0,11)]" -opng=s2
 Top face angles: {'XY': 42.273689006093655, 'XZ': 89.9999999999999, 'YZ': 47.72631099390635}
@@ -156,7 +156,7 @@ and a 1 unit horizontal tangent for the top face.
 
 Result:
  - Top face is about 45 degrees to the XY and YZ planes and perpendicular to XZ plane.
- - bottom face is parallel to XY and about perpendicular degrees to the XZ and YZ planes.
+ - bottom face is parallel to XY and perpendicular to XZ and YZ planes.
 ```bash
 $ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" --tangents="[(0,0,1),(9,0,10)]" -opng=s3
 Top face angles: {'XY': 41.987212495816685, 'XZ': 90.00000000000017, 'YZ': 48.01278750418332}
@@ -171,7 +171,7 @@ and a 0 unit tangent for the top face.
 
 Result:
  - Top face is 45 degrees to the XY and YZ planes and perpendicular to XZ plane.
- - bottom face is parallel to XY and about perpendicular to XZ and YZ planes.
+ - bottom face is parallel to XY and perpendicular to XZ and YZ planes.
 ```bash
 $ ./cq-sweep.py -p="[(0,0,0),(10,0,10)]" -t="[(0,0,1),(10,0,10)]" -opng=s4
 Top face angles: {'XY': 44.99999999999977, 'XZ': 89.99999999999991, 'YZ': 45.00000000000023}
@@ -180,12 +180,12 @@ Bottom face angles: {'XY': 179.99999999999991, 'XZ': 90.00000000000003, 'YZ': 89
 ![curved cylinder at an angle](./s4.png)
 
 ---
-Partial-S shaped cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom face
+Semi-S shaped cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom face
 and a 10 unit horizontal tangent for the top face.
 
 Result:
- - Top face is parallel with XY and YZ planes and perpendicular to XZ plane.
- - bottom face is parallel to XY and about perpendicular to XZ and YZ planes.
+ - Top face is parallel to XY and perpendicular to XZ and XZ plane.
+ - bottom face is parallel to XY and perpendicular to XZ and YZ planes.
 ```bash
 $ ./cq-sweep.py -p="[(0,0,0),(10,0,10)]" -t="[(0,0,1),(0,0,10)]" -opng=s5
 Top face angles: {'XY': 2.0524441350911866e-13, 'XZ': 90.00000000000006, 'YZ': 89.99999999999982}
@@ -199,13 +199,13 @@ and a 10 unit long vertical tangent for the bottom face.
 
 Result:
  - Top face is perpendicular to XY and XZ planes and parallelto YZ plane.
- - bottom face is parallel to XY and about perpendicular to XZ and YZ planes.
+ - bottom face is parallel to XY and perpendicular to XZ and YZ planes.
 ```bash
 $ ./cq-sweep.py -p="[(0,0,0),(10,0,10)]" -t="[(0,0,1),(10,0,0)]" --zoom=0.6 -opng=s6
 Top face angles: {'XY': 90.0000000000001, 'XZ': 90.0, 'YZ': 1.0438743197066534e-13}
 Bottom face angles: {'XY': 179.99999999999997, 'XZ': 90.00000000000003, 'YZ': 90.00000000000003}
 ```
-![curved cylinder at an angle](./s6.png)
+![arc cylinder at an angle](./s6.png)
 
 ## License
 
