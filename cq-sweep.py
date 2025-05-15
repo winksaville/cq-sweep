@@ -51,8 +51,14 @@ argparse.add_argument(
 argparse.add_argument(
     "-r","--roll",
     type=float,
-    default=180,
-    help="Roll angle. Example: --roll=90",
+    default=0,
+    help="Roll angle. Example: --roll=0",
+)
+argparse.add_argument(
+    "-z","--zoom",
+    type=float,
+    default=0.75,
+    help="Zoom for png. Example: --zoom=0.75",
 )
 argparse.add_argument(
     "-oas","--output-ascii-stl",
@@ -109,6 +115,7 @@ def angle_of_plane(normal, plane_normal):
 
 # Get the normal of the top face of the cylinder
 top_face = shape.faces(">Z").first().val()
+#print(f"Top face: location={top_face.Center().toTuple()}")
 normal_top_face = top_face.normalAt(top_face.Center())
 
 top_face_angles = {
@@ -120,6 +127,7 @@ print(f"Top face angles: {top_face_angles}")
 
 # Get the normal of the bottom face of the cylinder
 bottom_face = shape.faces("<Z").first().val()
+#print(f"Bottom face: location={bottom_face.Center().toTuple()}")
 normal_bottom_face = bottom_face.normalAt(bottom_face.Center())
 
 bottom_face_angles = {
@@ -151,7 +159,7 @@ if args.output_png:
         position=(camera_x, camera_y, camera_z),
         viewup=(0, 0, 1),
         focus=focus_loc,
-        zoom=0.9,
+        zoom=args.zoom,
         interact=False,
         screenshot=f"{args.output_png}.png",
     )

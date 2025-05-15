@@ -5,74 +5,96 @@ Using https://github.com/CadQuery/cadquery/blob/v2.5.2/examples/Ex023_Sweep.py a
 
 
 ## Install
-<!-- This section was produced by ChatGPT4.5. -->
-
-This project uses a Makefile to simplify the installation process.
-The Makefile automates the creation of a Conda environment, installation
-of dependencies, and verification of the installation.
-
-The following instructions will guide you through the installation process.
 
 ### Prerequisites
-- **Python**: Python 3.10, 3.11, 3.12 (Python >3.12 is not yet supported).
-- **Conda/Mamba**: Install [Mambaforge](https://github.com/conda-forge/miniforge#mambaforge) (recommended). If using Anaconda/Miniconda instead, you can use `conda` in place of `mamba` for the steps below.
-- **Git**: Ensure Git is installed (to clone the repository).
 
-### Installation Steps
+- Python 3.12 or later
+- [direnv](https://direnv.net/) (optional but recommended)
+- pip
 
-1. **Clone this repository** and navigate into it:
-    ~~~bash
-    git clone <REPO_URL>
-    cd <REPO_DIRECTORY>
-    ~~~
-    *(All commands below assume you are working inside this repository directory.)*
+### Installing
 
-2. **Create a new Conda environment** for the project using **mamba** and the provided `environment.yml`:
-    ~~~bash
-    mamba env create -n cadquery-env -f environment.yml
-    ~~~
-    *If you don't have `mamba`, use `conda` instead:*
-    ~~~bash
-    conda env create -n cadquery-env -f environment.yml
-    ~~~
-    This will create an environment named `cadquery-env` (you can choose a different name by replacing `cadquery-env`).
+This repo has a dependency on cadquery with a patch and thus it's added to this
+repo as a submodule. I've configured this repo so that it's easy to install
+and test if you have `direnv` installed.
 
-3. **Activate the environment**:
-    ~~~bash
-    conda activate cadquery-env
-    ~~~
 
-4. **Install CadQuery** (choose one of the following options):
-    - **Use CadQuery from conda-forge (default):** CadQuery should already be installed in the new environment (via the environment file). If not, install it with:
-      ~~~bash
-      mamba install -c conda-forge cadquery
-      ~~~
-      *(Use `conda install` if you don't have mamba.)*
-    - **Use a local CadQuery source (optional, for development):** Clone and install CadQuery from source:
-      ~~~bash
-      make clone-local   # clone the CadQuery repository into ./cadquery
-      make install-local # install the local CadQuery into the environment
-      ~~~
-      This will override the conda-forge installation with your local version of CadQuery.
+You can clone this repo with our without using --recursive. Below
+is an example of using --recursive:
 
-5. **Verify the installation**:
-    ~~~bash
-    make verify
-    ~~~
-    This will run a quick test (import CadQuery and print its version) to confirm everything is set up correctly.
+```bash
+wink@3900x 25-05-15T00:15:24.577Z:~/data/prgs/3dprinting
+$ git clone git@github.com:winksaville/cq-sweep --recursive cq-sweep-2
+Cloning into 'cq-sweep-2'...
+remote: Enumerating objects: 61, done.
+remote: Counting objects: 100% (61/61), done.
+remote: Compressing objects: 100% (37/37), done.
+remote: Total 61 (delta 22), reused 60 (delta 21), pack-reused 0 (from 0)
+Receiving objects: 100% (61/61), 1.49 MiB | 4.66 MiB/s, done.
+Resolving deltas: 100% (22/22), done.
+Submodule 'deps/cadquery' (https://github.com/winksaville/cadquery) registered for path 'deps/cadquery'
+Cloning into '/home/wink/data/prgs/3dprinting/cq-sweep-2/deps/cadquery'...
+remote: Enumerating objects: 11019, done.        
+remote: Counting objects: 100% (40/40), done.        
+remote: Compressing objects: 100% (35/35), done.        
+remote: Total 11019 (delta 22), reused 6 (delta 5), pack-reused 10979 (from 2)        
+Receiving objects: 100% (11019/11019), 10.00 MiB | 13.90 MiB/s, done.
+Resolving deltas: 100% (7968/7968), done.
+Submodule path 'deps/cadquery': checked out '1527bf7c878b67413ac0bace0e728d2fca64df1e'
+wink@3900x 25-05-15T00:15:49.954Z:~/data/prgs/3dprinting
+$ cd cq-sweep-2/
+direnv: error /home/wink/data/prgs/3dprinting/cq-sweep-2/.envrc is blocked. Run `direnv allow` to approve its contentwink@3900x 25-05-15T00:15:55.547Z:~/data/prgs/3dprinting/cq-sweep-2 (main)
+$ direnv allow
+direnv: loading ~/data/prgs/3dprinting/cq-sweep-2/.envrc
+Installing cadquery immutably from deps/cadquery
+direnv: ([/usr/bin/direnv export bash]) is taking a while to execute. Use CTRL-C to give up.
 
-6. **Clean up** (optional):
-    ~~~bash
-    make clean
-    ~~~
-    This removes the `cadquery-env` environment, allowing you to start fresh if needed.
+[notice] A new release of pip is available: 25.0.1 -> 25.1.1
+[notice] To update, run: pip install --upgrade pip
+direnv: export +VIRTUAL_ENV ~PATH
+wink@3900x 25-05-15T00:16:26.452Z:~/data/prgs/3dprinting/cq-sweep-2 (main)
+$ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]"
+Top face angles: {'XY': 44.99999999999991, 'XZ': 89.9999999999999, 'YZ': 45.00000000000009}
+Bottom face angles: {'XY': 134.99999999999997, 'XZ': 89.99999999999999, 'YZ': 135.00000000000003}
+wink@3900x 25-05-15T00:16:41.104Z:~/data/prgs/3dprinting/cq-sweep-2 (main)
+```
 
-### Makefile Targets Summary
-- **`make`** – Creates the Conda environment (if not already created) and installs all dependencies (including CadQuery via conda-forge).
-- **`make clone-local`** – Clones the official CadQuery repository into a `cadquery/` subfolder for using a development version.
-- **`make install-local`** – Installs CadQuery from the local `cadquery/` source into the environment (overriding any existing CadQuery installation).
-- **`make verify`** – Activates the environment and runs a test script to verify that CadQuery is installed and functioning (e.g. imports CadQuery and prints its version).
-- **`make clean`** – Deletes the Conda environment created for this project (so you can re-run the installation from scratch).
+And here is an example of using `git clone` without the --recursive option:
+
+```bash
+wink@3900x 25-05-15T00:16:41.104Z:~/data/prgs/3dprinting/cq-sweep-2 (main)
+$ cd ..
+direnv: unloading
+wink@3900x 25-05-15T00:16:50.042Z:~/data/prgs/3dprinting
+$ git clone git@github.com:winksaville/cq-sweep cq-sweep-3
+Cloning into 'cq-sweep-3'...
+remote: Enumerating objects: 61, done.
+remote: Counting objects: 100% (61/61), done.
+remote: Compressing objects: 100% (37/37), done.
+remote: Total 61 (delta 22), reused 60 (delta 21), pack-reused 0 (from 0)
+Receiving objects: 100% (61/61), 1.49 MiB | 4.45 MiB/s, done.
+Resolving deltas: 100% (22/22), done.
+wink@3900x 25-05-15T00:17:02.133Z:~/data/prgs/3dprinting
+$ cd cq-sweep-3
+direnv: error /home/wink/data/prgs/3dprinting/cq-sweep-3/.envrc is blocked. Run `direnv allow` to approve its contentwink@3900x 25-05-15T00:17:14.227Z:~/data/prgs/3dprinting/cq-sweep-3 (main)
+$ direnv allow
+direnv: loading ~/data/prgs/3dprinting/cq-sweep-3/.envrc
+Initializing cq-sweep/deps/cadquery
+Submodule 'deps/cadquery' (https://github.com/winksaville/cadquery) registered for path 'deps/cadquery'
+Cloning into '/home/wink/data/prgs/3dprinting/cq-sweep-3/deps/cadquery'...
+Submodule path 'deps/cadquery': checked out '1527bf7c878b67413ac0bace0e728d2fca64df1e'
+Installing cadquery immutably from deps/cadquery
+direnv: ([/usr/bin/direnv export bash]) is taking a while to execute. Use CTRL-C to give up.
+
+[notice] A new release of pip is available: 25.0.1 -> 25.1.1
+[notice] To update, run: pip install --upgrade pip
+direnv: export +VIRTUAL_ENV ~PATH
+wink@3900x 25-05-15T00:17:30.894Z:~/data/prgs/3dprinting/cq-sweep-3 (main)
+$ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]"
+Top face angles: {'XY': 44.99999999999991, 'XZ': 89.9999999999999, 'YZ': 45.00000000000009}
+Bottom face angles: {'XY': 134.99999999999997, 'XZ': 89.99999999999999, 'YZ': 135.00000000000003}
+wink@3900x 25-05-15T00:17:54.629Z:~/data/prgs/3dprinting/cq-sweep-3 (main)
+```
 
 ## Usage
 
@@ -101,55 +123,89 @@ options:
                         Output as `.png` screenshot. Example: --output-png=filename' result is 'filename.png'
 ```
 
-## Example
+## Examples
 
-Straight cylinder along a 45 degree spline with no tangents.
+Straight tapered cylinder along a 45 degree spline with no tangents.
+
+Result:
+ - Top face is 45 degrees to the XY and YZ planes and perpendicular to XZ plane.
+ - bottom face is parallel to XY and about 45 degrees to the XZ and YZ planes.
 ```bash
-$ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" -opng="spline-45-degs_cylinder_top-no-tangents_faces-parallel"
+$ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" -opng=s1
 Top face angles: {'XY': 44.99999999999991, 'XZ': 89.9999999999999, 'YZ': 45.00000000000009}
 Bottom face angles: {'XY': 134.99999999999997, 'XZ': 89.99999999999999, 'YZ': 135.00000000000003}
 ```
-![straight cylinder at an angle](./spline-45-degs_cylinder_top-no-tangents_faces-parallel.png)
+![straight cylinder at an angle](./s1.png)
 
 ---
-Curved cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom and top faces.
-```bash
-$ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" --tangents="[(0,0,1),(10,0,11)]"
-Top face angles: {'XY': 42.27368900609325, 'XZ': 90.00000000000047, 'YZ': 47.72631099390675}
-Bottom face angles: {'XY': 179.99999999999997, 'XZ': 89.99999999999997, 'YZ': 89.99999999999999}
-```
-![curved cylinder at an angle](./spline-45-degs_cylinder_top-1-unit-vert-tan_bottom-1-unit-vert-tan_faces-45-degs.png)
+Partial-S shaped tapered cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom and top faces.
 
-Curved cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom face
-and a 1 unit horizontal tangle for the top face
+Result:
+ - Top face is about 45 degrees to the XY and YZ planes and perpendicular to XZ plane.
+ - bottom face is parallel to XY and about perpendicular to the XZ and YZ planes.
 ```bash
-$ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" --tangents="[(0,0,1),(9,0,10)]"
-Top face angles: {'XY': 41.987212495815804, 'XZ': 90.00000000000044, 'YZ': 48.012787504184196}
+$ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" --tangents="[(0,0,1),(10,0,11)]" -opng=s2
+Top face angles: {'XY': 42.273689006093655, 'XZ': 89.9999999999999, 'YZ': 47.72631099390635}
+Bottom face angles: {'XY': 179.99999999999997, 'XZ': 89.99999999999999, 'YZ': 89.99999999999999}
+```
+![curved cylinder at an angle](./s2.png)
+
+---
+Partial-S shaped tapered cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom face
+and a 1 unit horizontal tangent for the top face.
+
+Result:
+ - Top face is about 45 degrees to the XY and YZ planes and perpendicular to XZ plane.
+ - bottom face is parallel to XY and about perpendicular degrees to the XZ and YZ planes.
+```bash
+$ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" --tangents="[(0,0,1),(9,0,10)]" -opng=s3
+Top face angles: {'XY': 41.987212495816685, 'XZ': 90.00000000000017, 'YZ': 48.01278750418332}
+Bottom face angles: {'XY': 179.99999999999997, 'XZ': 90.0, 'YZ': 90.00000000000004}
 Bottom face angles: {'XY': 180.0, 'XZ': 90.0, 'YZ': 90.0}
 ```
-![curved cylinder at an angle](./spline-45-degs_cylinder_top-1-unit-hori-tan_bottom-1-unit-hori-tan_faces-45-degs.png)
+![curved cylinder at an angle](./s3.png)
 
 ---
-Curved cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom face
-and a 10 unit long horizontal tangent for the bottom face.
-The top and bottom faces "appear" to be parallel to each other.
+Partial-S shaped tapered cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom face
+and a 0 unit tangent for the top face.
+
+Result:
+ - Top face is 45 degrees to the XY and YZ planes and perpendicular to XZ plane.
+ - bottom face is parallel to XY and about perpendicular to XZ and YZ planes.
 ```bash
-$ ./cq-sweep.py -p="[(0,0,0),(10,0,10)]" -t="[(0,0,1),(0,0,10)]"
-Top face angles: {'XY': 2.0349084617646358e-13, 'XZ': 90.0, 'YZ': 90.0000000000002}
-Bottom face angles: {'XY': 179.99999999999994, 'XZ': 90.0, 'YZ': 90.00000000000006}
+$ ./cq-sweep.py -p="[(0,0,0),(10,0,10)]" -t="[(0,0,1),(10,0,10)]" -opng=s4
+Top face angles: {'XY': 44.99999999999977, 'XZ': 89.99999999999991, 'YZ': 45.00000000000023}
+Bottom face angles: {'XY': 179.99999999999991, 'XZ': 90.00000000000003, 'YZ': 89.99999999999993}
 ```
-![curved cylinder at an angle](./spline-45-degs_cylinder_top-1-unit-vert-tan_bottom-10-unit-hori-tan_faces-parallel.png)
+![curved cylinder at an angle](./s4.png)
 
 ---
-Curved cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom face
+Partial-S shaped cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom face
+and a 10 unit horizontal tangent for the top face.
+
+Result:
+ - Top face is parallel with XY and YZ planes and perpendicular to XZ plane.
+ - bottom face is parallel to XY and about perpendicular to XZ and YZ planes.
+```bash
+$ ./cq-sweep.py -p="[(0,0,0),(10,0,10)]" -t="[(0,0,1),(0,0,10)]" -opng=s5
+Top face angles: {'XY': 2.0524441350911866e-13, 'XZ': 90.00000000000006, 'YZ': 89.99999999999982}
+Bottom face angles: {'XY': 179.99999999999997, 'XZ': 90.00000000000003, 'YZ': 90.0}
+```
+![curved cylinder at an angle](./s5.png)
+
+---
+An arc tapered cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom face
 and a 10 unit long vertical tangent for the bottom face.
-The top and bottom faces "appear" to be perpendicular to each other.
+
+Result:
+ - Top face is perpendicular to XY and XZ planes and parallelto YZ plane.
+ - bottom face is parallel to XY and about perpendicular to XZ and YZ planes.
 ```bash
-$ ./cq-sweep.py -p="[(0,0,0),(10,0,10)]" -t="[(0,0,1),(10,0,0)]"
-Top face angles: {'XY': 89.99999999999987, 'XZ': 90.00000000000047, 'YZ': 4.892543547122269e-13}
-Bottom face angles: {'XY': 180.0, 'XZ': 90.0, 'YZ': 90.0}
+$ ./cq-sweep.py -p="[(0,0,0),(10,0,10)]" -t="[(0,0,1),(10,0,0)]" --zoom=0.6 -opng=s6
+Top face angles: {'XY': 90.0000000000001, 'XZ': 90.0, 'YZ': 1.0438743197066534e-13}
+Bottom face angles: {'XY': 179.99999999999997, 'XZ': 90.00000000000003, 'YZ': 90.00000000000003}
 ```
-![curved cylinder at an angle](./spline-45-degs_cylinder_top-1-unit-vert-tan_bottom-10-unit-vert-tan_faces-perpendicular.png)
+![curved cylinder at an angle](./s6.png)
 
 ## License
 
