@@ -1,4 +1,4 @@
 [submodule "deps/cadquery"]
 	path = deps/cadquery
 	url = https://github.com/winksaville/cadquery
-	branch = add-viewup-to-vis-show
+	branch = cq-debug-show
