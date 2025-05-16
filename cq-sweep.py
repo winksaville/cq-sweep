@@ -49,16 +49,22 @@ argparse.add_argument(
     help="List of tangents for the path. Example: --tangents='[(0,0,1),(10,0,20)]'",
 )
 argparse.add_argument(
-    "-r","--roll",
-    type=float,
-    default=0,
-    help="Roll angle. Example: --roll=0",
-)
-argparse.add_argument(
     "-z","--zoom",
     type=float,
-    default=0.75,
-    help="Zoom for png. Example: --zoom=0.75",
+    default=1,
+    help="Camera Zoom for png. Example: --zoom=1",
+)
+argparse.add_argument(
+    "-r","--roll",
+    type=float,
+    default=-35,
+    help="Camera Roll angle for png. Example: --roll=-35",
+)
+argparse.add_argument(
+    "-e","--elevation",
+    type=float,
+    default=-45,
+    help="Camera Elevation for png. Example: --elevation=-45",
 )
 argparse.add_argument(
     "-oas","--output-ascii-stl",
@@ -72,6 +78,31 @@ argparse.add_argument(
     default=None,
     help="Output as `.png` screenshot. Example: --output-png=filename' result is 'filename.png'",
 )
+argparse.add_argument(
+    "--brz",
+    type=str,
+    #default=True,
+    help="Enable Before Reset Zoom. Example: --brz=True",
+)
+argparse.add_argument(
+    "--arz",
+    type=str,
+    #default=False,
+    help="Enable After Reset Zoom. Example: --arz=True",
+)
+argparse.add_argument(
+    "--brre",
+    type=str,
+    #default=True,
+    help="Enable Before Reset Roll Elevation. Example: --brre=True",
+)
+argparse.add_argument(
+    "--arre",
+    type=str,
+    #default=False,
+    help="Enable After Reset Roll Elevation. Example: --arre=True",
+)
+
 args = argparse.parse_args()
 
 # Check if the script is run with the correct number of arguments
@@ -155,12 +186,17 @@ if args.output_png:
         shape,
         width=800,
         height=600,
-        roll=args.roll,
-        position=(camera_x, camera_y, camera_z),
-        viewup=(0, 0, 1),
-        focus=focus_loc,
         zoom=args.zoom,
-        interact=False,
+        roll=args.roll,
+        elevation=args.elevation,
+        #position=(camera_x, camera_y, camera_z),
+        #viewup=(0, 0, 1),
+        #focus=focus_loc,
+        interact=True,
         screenshot=f"{args.output_png}.png",
+        brz=args.brz == "True",
+        arz=args.arz == "True",
+        brre=args.brre == "True",
+        arre=args.arre == "True",
     )
 
