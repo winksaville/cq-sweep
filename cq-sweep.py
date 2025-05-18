@@ -2,7 +2,7 @@
 # Initially based on https://github.com/CadQuery/cadquery/blob/master/examples/Ex023_Sweep.py
 try:
     import cadquery as cq
-    from cadquery.vis import show
+    from cadquery import show
 except ImportError:
     print("Err: CadQuery is not available, it is a submodule")
     print("     run `git submodule init` and `direnv allow` and")
