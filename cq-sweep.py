@@ -49,6 +49,30 @@ argparse.add_argument(
     help="List of tangents for the path. Example: --tangents='[(0,0,1),(10,0,20)]'",
 )
 argparse.add_argument(
+    "-vu","--view-up",
+    type=str,
+    default=None,
+    help="ViewUp XYZ tuple. Example: --view-up='(0, 0, 1)'",
+)
+argparse.add_argument(
+    "-pos","--position",
+    type=str,
+    default=None,
+    help="Position XYZ tuple. Example: --position='(5.0, -20.0, 5.0)'",
+)
+argparse.add_argument(
+    "-fp","--focal-point",
+    type=str,
+    default=None,
+    help="Focal point XYZ tuple. Example: --focal-point='(5.0, 0.0, 5.0)'",
+)
+argparse.add_argument(
+    "-cr","--clipping-range",
+    type=str,
+    default=None,
+    help="Clipping range (near,far) tuple. Example: --clipping-range='(-0.1, 1000.01)'",
+)
+argparse.add_argument(
     "-z","--zoom",
     type=float,
     default=1,
@@ -67,40 +91,28 @@ argparse.add_argument(
     help="Camera Elevation for png. Example: --elevation=-45",
 )
 argparse.add_argument(
+    "-a","--azimuth",
+    type=float,
+    default=0,
+    help="Camera azimuth for png. Example: --azimuth=0",
+)
+argparse.add_argument(
     "-oas","--output-ascii-stl",
     type=str,
     default=None,
     help="Output an ASCII stl file. Example: --output-ascii-stl=filename' result is 'filename.stl'",
 )
 argparse.add_argument(
+    "-s","--show",
+    type=str,
+    default="True",
+    help="Show in with defaults",
+)
+argparse.add_argument(
     "-opng","--output-png",
     type=str,
     default=None,
     help="Output as `.png` screenshot. Example: --output-png=filename' result is 'filename.png'",
-)
-argparse.add_argument(
-    "--brz",
-    type=str,
-    #default=True,
-    help="Enable Before Reset Zoom. Example: --brz=True",
-)
-argparse.add_argument(
-    "--arz",
-    type=str,
-    #default=False,
-    help="Enable After Reset Zoom. Example: --arz=True",
-)
-argparse.add_argument(
-    "--brre",
-    type=str,
-    #default=True,
-    help="Enable Before Reset Roll Elevation. Example: --brre=True",
-)
-argparse.add_argument(
-    "--arre",
-    type=str,
-    #default=False,
-    help="Enable After Reset Roll Elevation. Example: --arre=True",
 )
 
 args = argparse.parse_args()
@@ -173,15 +185,16 @@ if args.output_ascii_stl:
     cq.Assembly(shape).export(f"{args.output_ascii_stl}.stl", exportType="STL", ascii=True)
 
 # Show the shape in the viewer
-show(shape, width=800, height=600, title=f"pts: {pts}, tangents: {tangents}, angles XY:{top_face_angles["XY"]:.2f}, XZ:{top_face_angles["XZ"]:.2f}, YZ:{top_face_angles["YZ"]:.2f}")
+if args.show == "True":
+    show(shape, width=800, height=600, title=f"pts: {pts}, tangents: {tangents}, angles XY:{top_face_angles["XY"]:.2f}, XZ:{top_face_angles["XZ"]:.2f}, YZ:{top_face_angles["YZ"]:.2f}")
 
 # Write the shape to a file if output_png is specified
 if args.output_png:
-    focus_loc = middle_loc[0].toTuple()[0]
-    camera_x = focus_loc[0]
-    camera_y = -20
-    camera_z = focus_loc[2]
-    #print(f"roll={args.roll:.2f}, focus_loc={focus_loc}, camera_x={camera_x:.2f}, camera_y={camera_y:.2f}, camera_z={camera_z:.2f}")
+    vu = eval(args.view_up) if args.view_up else None
+    pos = eval(args.position) if args.position else None
+    focus_loc = eval(args.focal_point) if args.focal_point else None
+    clipping_range = eval(args.clipping_range) if args.clipping_range else None
+    #print(f"vu={vu}, pos={pos}, focus_loc={focus_loc}")
     show(
         shape,
         width=800,
@@ -189,14 +202,12 @@ if args.output_png:
         zoom=args.zoom,
         roll=args.roll,
         elevation=args.elevation,
-        #position=(camera_x, camera_y, camera_z),
-        #viewup=(0, 0, 1),
-        #focus=focus_loc,
+        azimuth=args.azimuth,
+        viewup=vu,
+        position=pos,
+        focus=focus_loc,
+        clipping_range=clipping_range,
         interact=True,
         screenshot=f"{args.output_png}.png",
-        brz=args.brz == "True",
-        arz=args.arz == "True",
-        brre=args.brre == "True",
-        arre=args.arre == "True",
     )
 

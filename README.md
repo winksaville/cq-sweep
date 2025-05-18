@@ -207,6 +207,38 @@ Bottom face angles: {'XY': 179.99999999999997, 'XZ': 90.00000000000003, 'YZ': 90
 ```
 ![arc cylinder at an angle](./s6.png)
 
+---
+
+Semi-S shaped cylinder along a 45 degree spline with 1 unit long vertical tangents for the bottom face
+and a 10 unit horizontal tangent for the top face.
+
+Here pasing more parameters, more info in the future.
+
+Result:
+ - Top face is parallel to XY and perpendicular to XZ and XZ plane.
+ - bottom face is parallel to XY and perpendicular to XZ and YZ planes.
+```bash
+$ ./cq-sweep.py -p="[(0,0,0),(10,0,10)]" -t="[(0,0,1),(0,0,10)]" -s=False --roll=0 --elevation=0 --azimuth=35 -pos="(5,-20,5)" -vu="(0,0,1)" -fp="(5,0,5)" -cr="(1,1000)" -z=0.75 -opng=s7
+Top face angles: {'XY': 2.0524441350911866e-13, 'XZ': 90.00000000000006, 'YZ': 89.99999999999982}
+Bottom face angles: {'XY': 179.99999999999997, 'XZ': 90.00000000000003, 'YZ': 90.0}
+vis show:+                                                  camera orientation: pos=(   0.00,    0.00,    1.00) fp=(   0.00,    0.00,    0.00) vu=(   0.00,    1.00,    0.00) dis=1.00    va=30.00   cr=(   0.01, 1000.01)      o=(   0.00,   -0.00,    0.00) owxyz=(   0.00,    0.00,    0.00,    1.00)
+vis show: get camera                                        camera orientation: pos=(   0.00,    0.00,    1.00) fp=(   0.00,    0.00,    0.00) vu=(   0.00,    1.00,    0.00) dis=1.00    va=30.00   cr=(   0.01, 1000.01)      o=(   0.00,   -0.00,    0.00) owxyz=(   0.00,    0.00,    0.00,    1.00)
+vis show: before camera.ResetCamera()                       camera orientation: pos=(   0.00,    0.00,    1.00) fp=(   0.00,    0.00,    0.00) vu=(   0.00,    1.00,    0.00) dis=1.00    va=30.00   cr=(   0.01, 1000.01)      o=(   0.00,   -0.00,    0.00) owxyz=(   0.00,    0.00,    0.00,    1.00)
+vis show: after camera.ResetCamera()                        camera orientation: pos=(   4.83,    0.00,   33.31) fp=(   4.83,    0.00,    5.00) vu=(   0.00,    1.00,    0.00) dis=28.31   va=30.00   cr=(  18.08,   41.26)      o=(   0.00,   -0.00,    0.00) owxyz=(   0.00,    0.00,    0.00,    1.00)
+vis show: camera.SetViewUp((0.00, 0.00, 1.00))              camera orientation: pos=(   4.83,    0.00,   33.31) fp=(   4.83,    0.00,    5.00) vu=(   0.00,    0.00,    1.00) dis=28.31   va=30.00   cr=(  18.08,   41.26)      o=(   0.00,   -0.00,    0.00) owxyz=( 180.00,    0.00,    0.00,    1.00)
+vis show: camera.SetPosition((5.00, -20.00, 5.00))          camera orientation: pos=(   5.00,  -20.00,    5.00) fp=(   4.83,    0.00,    5.00) vu=(   0.00,    0.00,    1.00) dis=20.00   va=30.00   cr=(  18.08,   41.26)      o=( -89.51,  -90.00,  -90.00) owxyz=( 270.00,    1.00,    0.00,    0.00)
+vis show: camera.SetFocalPoint((5.00, 0.00, 5.00))          camera orientation: pos=(   5.00,  -20.00,    5.00) fp=(   5.00,    0.00,    5.00) vu=(   0.00,    0.00,    1.00) dis=20.00   va=30.00   cr=(  18.08,   41.26)      o=( -90.00,   -0.00,    0.00) owxyz=(  90.00,   -1.00,    0.00,    0.00)
+vis show: camera.SetClippingRange((1.00, 1000.00))          camera orientation: pos=(   5.00,  -20.00,    5.00) fp=(   5.00,    0.00,    5.00) vu=(   0.00,    0.00,    1.00) dis=20.00   va=30.00   cr=(   1.00, 1000.00)      o=( -90.00,   -0.00,    0.00) owxyz=(  90.00,   -1.00,    0.00,    0.00)
+vis show: camera.Roll(0.0)                                  camera orientation: pos=(   5.00,  -20.00,    5.00) fp=(   5.00,    0.00,    5.00) vu=(   0.00,    0.00,    1.00) dis=20.00   va=30.00   cr=(   1.00, 1000.00)      o=( -90.00,   -0.00,    0.00) owxyz=(  90.00,   -1.00,    0.00,    0.00)
+vis show: camera.Elevation(0.0)                             camera orientation: pos=(   5.00,  -20.00,    5.00) fp=(   5.00,    0.00,    5.00) vu=(   0.00,    0.00,    1.00) dis=20.00   va=30.00   cr=(   1.00, 1000.00)      o=( -90.00,   -0.00,    0.00) owxyz=(  90.00,   -1.00,    0.00,    0.00)
+vis show: camera.Elevation(0.0)                             camera orientation: pos=(  16.47,  -16.38,    5.00) fp=(   5.00,    0.00,    5.00) vu=(   0.00,    0.00,    1.00) dis=20.00   va=30.00   cr=(   1.00, 1000.00)      o=( -55.00,  -90.00,  -90.00) owxyz=( 264.81,    0.91,    0.29,    0.29)
+vis show: camera.Zoom(0.75)                                 camera orientation: pos=(  16.47,  -16.38,    5.00) fp=(   5.00,    0.00,    5.00) vu=(   0.00,    0.00,    1.00) dis=20.00   va=40.00   cr=(   1.00, 1000.00)      o=( -55.00,  -90.00,  -90.00) owxyz=( 264.81,    0.91,    0.29,    0.29)
+vis show: before inter.Start                                camera orientation: pos=(  16.47,  -16.38,    5.00) fp=(   5.00,    0.00,    5.00) vu=(   0.00,    0.00,    1.00) dis=20.00   va=40.00   cr=(   1.00, 1000.00)      o=( -55.00,  -90.00,  -90.00) owxyz=( 264.81,    0.91,    0.29,    0.29)
+vis show:-                                                  camera orientation: pos=(  16.47,  -16.38,    5.00) fp=(   5.00,    0.00,    5.00) vu=(   0.00,    0.00,    1.00) dis=20.00   va=40.00   cr=(   1.00, 1000.00)      o=( -55.00,  -90.00,  -90.00) owxyz=( 264.81,    0.91,    0.29,    0.29)
+```
+
+![curved cylinder at an angle](./s7.png)]
+
 ## License
 
 Licensed under either of
