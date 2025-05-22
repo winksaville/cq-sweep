@@ -96,10 +96,11 @@ argparse.add_argument(
     help="Output an ASCII stl file. Example: --output-ascii-stl=filename' result is 'filename.stl'",
 )
 argparse.add_argument(
-    "-s","--show",
-    type=str,
-    default="True",
-    help="Show in with defaults",
+    "-ns","--no-show",
+    default=True,
+    dest="show",
+    action="store_false",
+    help="Do not show the object, default the object displayed using 'show()'",
 )
 argparse.add_argument(
     "-opng","--output-png",
@@ -178,7 +179,7 @@ if args.output_ascii_stl:
     cq.Assembly(shape).export(f"{args.output_ascii_stl}.stl", exportType="STL", ascii=True)
 
 # Show the shape in the viewer
-if args.show == "True":
+if args.show:
     show(shape, width=800, height=600, title=f"pts: {pts}, tangents: {tangents}, angles XY:{top_face_angles["XY"]:.2f}, XZ:{top_face_angles["XZ"]:.2f}, YZ:{top_face_angles["YZ"]:.2f}")
 
 # Write the shape to a file if output_png is specified
