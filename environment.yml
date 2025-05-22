@@ -1,7 +1,0 @@
-name: cq-sweep
-channels:
- - conda-forge
- - nodefaults
-dependencies:
-  - python ==3.12
-  - cadquery >=2.6

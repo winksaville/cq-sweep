@@ -6,122 +6,79 @@ Using https://github.com/CadQuery/cadquery/blob/v2.5.2/examples/Ex023_Sweep.py a
 
 ## Install
 
-### Prerequisites
-
-- Python 3.12 or later
-- [direnv](https://direnv.net/) (optional but recommended)
-- pip
-
-### Installing
-
-This repo has a dependency on cadquery with a patch and thus it's added to this
-repo as a submodule. I've configured this repo so that it's easy to install
-and test if you have `direnv` installed.
-
-
-You can clone this repo with our without using --recursive. Below
-is an example of using --recursive:
-
 ```bash
-wink@3900x 25-05-15T00:15:24.577Z:~/data/prgs/3dprinting
-$ git clone git@github.com:winksaville/cq-sweep --recursive cq-sweep-2
-Cloning into 'cq-sweep-2'...
-remote: Enumerating objects: 61, done.
-remote: Counting objects: 100% (61/61), done.
-remote: Compressing objects: 100% (37/37), done.
-remote: Total 61 (delta 22), reused 60 (delta 21), pack-reused 0 (from 0)
-Receiving objects: 100% (61/61), 1.49 MiB | 4.66 MiB/s, done.
-Resolving deltas: 100% (22/22), done.
-Submodule 'deps/cadquery' (https://github.com/winksaville/cadquery) registered for path 'deps/cadquery'
-Cloning into '/home/wink/data/prgs/3dprinting/cq-sweep-2/deps/cadquery'...
-remote: Enumerating objects: 11019, done.        
-remote: Counting objects: 100% (40/40), done.        
-remote: Compressing objects: 100% (35/35), done.        
-remote: Total 11019 (delta 22), reused 6 (delta 5), pack-reused 10979 (from 2)        
-Receiving objects: 100% (11019/11019), 10.00 MiB | 13.90 MiB/s, done.
-Resolving deltas: 100% (7968/7968), done.
-Submodule path 'deps/cadquery': checked out '1527bf7c878b67413ac0bace0e728d2fca64df1e'
-wink@3900x 25-05-15T00:15:49.954Z:~/data/prgs/3dprinting
-$ cd cq-sweep-2/
-direnv: error /home/wink/data/prgs/3dprinting/cq-sweep-2/.envrc is blocked. Run `direnv allow` to approve its contentwink@3900x 25-05-15T00:15:55.547Z:~/data/prgs/3dprinting/cq-sweep-2 (main)
-$ direnv allow
-direnv: loading ~/data/prgs/3dprinting/cq-sweep-2/.envrc
-Installing cadquery immutably from deps/cadquery
-direnv: ([/usr/bin/direnv export bash]) is taking a while to execute. Use CTRL-C to give up.
-
-[notice] A new release of pip is available: 25.0.1 -> 25.1.1
-[notice] To update, run: pip install --upgrade pip
-direnv: export +VIRTUAL_ENV ~PATH
-wink@3900x 25-05-15T00:16:26.452Z:~/data/prgs/3dprinting/cq-sweep-2 (main)
-$ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]"
-Top face angles: {'XY': 44.99999999999991, 'XZ': 89.9999999999999, 'YZ': 45.00000000000009}
-Bottom face angles: {'XY': 134.99999999999997, 'XZ': 89.99999999999999, 'YZ': 135.00000000000003}
-wink@3900x 25-05-15T00:16:41.104Z:~/data/prgs/3dprinting/cq-sweep-2 (main)
+git clone --recursive https://github.com/youruser/cq-sweep.git
+cd cq-sweep
+make setup
 ```
 
-And here is an example of using `git clone` without the --recursive option:
-
-```bash
-wink@3900x 25-05-15T00:16:41.104Z:~/data/prgs/3dprinting/cq-sweep-2 (main)
-$ cd ..
-direnv: unloading
-wink@3900x 25-05-15T00:16:50.042Z:~/data/prgs/3dprinting
-$ git clone git@github.com:winksaville/cq-sweep cq-sweep-3
-Cloning into 'cq-sweep-3'...
-remote: Enumerating objects: 61, done.
-remote: Counting objects: 100% (61/61), done.
-remote: Compressing objects: 100% (37/37), done.
-remote: Total 61 (delta 22), reused 60 (delta 21), pack-reused 0 (from 0)
-Receiving objects: 100% (61/61), 1.49 MiB | 4.45 MiB/s, done.
-Resolving deltas: 100% (22/22), done.
-wink@3900x 25-05-15T00:17:02.133Z:~/data/prgs/3dprinting
-$ cd cq-sweep-3
-direnv: error /home/wink/data/prgs/3dprinting/cq-sweep-3/.envrc is blocked. Run `direnv allow` to approve its contentwink@3900x 25-05-15T00:17:14.227Z:~/data/prgs/3dprinting/cq-sweep-3 (main)
-$ direnv allow
-direnv: loading ~/data/prgs/3dprinting/cq-sweep-3/.envrc
-Initializing cq-sweep/deps/cadquery
-Submodule 'deps/cadquery' (https://github.com/winksaville/cadquery) registered for path 'deps/cadquery'
-Cloning into '/home/wink/data/prgs/3dprinting/cq-sweep-3/deps/cadquery'...
-Submodule path 'deps/cadquery': checked out '1527bf7c878b67413ac0bace0e728d2fca64df1e'
-Installing cadquery immutably from deps/cadquery
-direnv: ([/usr/bin/direnv export bash]) is taking a while to execute. Use CTRL-C to give up.
-
-[notice] A new release of pip is available: 25.0.1 -> 25.1.1
-[notice] To update, run: pip install --upgrade pip
-direnv: export +VIRTUAL_ENV ~PATH
-wink@3900x 25-05-15T00:17:30.894Z:~/data/prgs/3dprinting/cq-sweep-3 (main)
-$ ./cq-sweep.py --pts="[(0,0,0),(10,0,10)]"
-Top face angles: {'XY': 44.99999999999991, 'XZ': 89.9999999999999, 'YZ': 45.00000000000009}
-Bottom face angles: {'XY': 134.99999999999997, 'XZ': 89.99999999999999, 'YZ': 135.00000000000003}
-wink@3900x 25-05-15T00:17:54.629Z:~/data/prgs/3dprinting/cq-sweep-3 (main)
-```
+This:
+- Initializes the CadQuery submodule
+- Creates the `cq-sweep` micromamba environment
+- Builds and installs your local `deps/cadquery` fork (no pip required)
 
 ## Usage
 
 ```bash
 $ ./cq-sweep.py -h
-usage: cq-sweep.py [-h] [-br BASE_RADIUS] [-tr TOP_RADIUS] [-ml MID_LOCATION] [-p PTS] [-t TANGENTS] [-r ROLL] [-oas OUTPUT_ASCII_STL]
-                   [-opng OUTPUT_PNG]
+cq path: /home/wink/data/prgs/3dprinting/cq-sweep/deps/cadquery/cadquery/__init__.py
+usage: cq-sweep.py [-h] [-br BASE_RADIUS] [-tr TOP_RADIUS] [-ml MID_LOCATION] [-p PTS] [-t TANGENTS] [-vu VIEW_UP] [-pos POSITION] [-fp FOCAL_POINT] [-cr CLIPPING_RANGE] [-z ZOOM] [-r ROLL]
+                   [-e ELEVATION] [-a AZIMUTH] [-oas OUTPUT_ASCII_STL] [-ns] [-opng OUTPUT_PNG]
 
 Sweep a cylinder along a path defined by points and optional tangents.
 
 options:
   -h, --help            show this help message and exit
-  -br, --base_radius BASE_RADIUS
+  -br BASE_RADIUS, --base_radius BASE_RADIUS
                         Base radius of the cylinder. Example: --base_radius=0.5
-  -tr, --top_radius TOP_RADIUS
+  -tr TOP_RADIUS, --top_radius TOP_RADIUS
                         Top radius of the cylinder. Example: --top_radius=0.15
-  -ml, --mid_location MID_LOCATION
+  -ml MID_LOCATION, --mid_location MID_LOCATION
                         Location of mid section where transition begins to top_radius. value between 0..1. Example: --mid_location=0.5
-  -p, --pts PTS         List of points defining the path. Example: --pts='[(0,0,0),(10,0,10)]'
-  -t, --tangents TANGENTS
+  -p PTS, --pts PTS     List of points defining the path. Example: --pts='[(0,0,0),(10,0,10)]'
+  -t TANGENTS, --tangents TANGENTS
                         List of tangents for the path. Example: --tangents='[(0,0,1),(10,0,20)]'
-  -r, --roll ROLL       Roll angle. Example: --roll=90
-  -oas, --output-ascii-stl OUTPUT_ASCII_STL
+  -vu VIEW_UP, --view-up VIEW_UP
+                        ViewUp XYZ tuple. Example: --view-up='(0, 0, 1)'
+  -pos POSITION, --position POSITION
+                        Position XYZ tuple. Example: --position='(5.0, -20.0, 5.0)'
+  -fp FOCAL_POINT, --focal-point FOCAL_POINT
+                        Focal point XYZ tuple. Example: --focal-point='(5.0, 0.0, 5.0)'
+  -cr CLIPPING_RANGE, --clipping-range CLIPPING_RANGE
+                        Clipping range (near,far) tuple. Example: --clipping-range='(-0.1, 1000.01)'
+  -z ZOOM, --zoom ZOOM  Camera Zoom for png. Example: --zoom=1
+  -r ROLL, --roll ROLL  Camera Roll angle for png. Example: --roll=-35
+  -e ELEVATION, --elevation ELEVATION
+                        Camera Elevation for png. Example: --elevation=-45
+  -a AZIMUTH, --azimuth AZIMUTH
+                        Camera azimuth for png. Example: --azimuth=0
+  -oas OUTPUT_ASCII_STL, --output-ascii-stl OUTPUT_ASCII_STL
                         Output an ASCII stl file. Example: --output-ascii-stl=filename' result is 'filename.stl'
-  -opng, --output-png OUTPUT_PNG
+  -ns, --no-show        Do not show the object, default the object displayed using 'show()'
+  -opng OUTPUT_PNG, --output-png OUTPUT_PNG
                         Output as `.png` screenshot. Example: --output-png=filename' result is 'filename.png'
 ```
+
+## Run
+
+Use the default sweep setup:
+
+```bash
+make run
+```
+
+Override input points (`p`) and tangents (`t`):
+
+```bash
+make run p="[(0,0,0),(5,0,5)]" t="[(0,0,1),(0,0,5)]"
+```
+
+Add extra CLI args after `--`, e.g. to export output:
+
+```bash
+make run -- --output-png=curve1
+```
+
 
 ## Examples
 
