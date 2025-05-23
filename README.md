@@ -3,11 +3,21 @@
 Explore using cadquery workplane.sweep which sweeps along a spline.
 Using https://github.com/CadQuery/cadquery/blob/v2.5.2/examples/Ex023_Sweep.py as a base.
 
+## Prerequisites
+
+- [make](https://www.gnu.org/software/make/)
+- [git](https://git-scm.com/downloads)
+- [Python 3.9](https://www.python.org/downloads/)
+- [micromamba](https://micromamba.snakepit.net/)
+- [conda-build](https://github.com/conda/conda-build) 
+  - `micromamba install -n base conda-build -c conda-forge`
+  - `micromamba activate base`
 
 ## Install
 
+Clone the repository and run `make setup` to install dependencies.
 ```bash
-git clone --recursive https://github.com/youruser/cq-sweep.git
+git clone https://github.com/youruser/cq-sweep.git
 cd cq-sweep
 make setup
 ```
@@ -61,7 +71,11 @@ options:
 
 ## Run
 
-Use the default sweep setup:
+run ./cq-sweep.py directly passing various parameters.
+
+```bash
+./cq-sweep.py --pts="[(0,0,0),(10,0,10)]" --tangents="[(0,0,1),(10,0,20)]" -opng=curve1
+```
 
 ```bash
 make run
@@ -78,7 +92,6 @@ Add extra CLI args after `--`, e.g. to export output:
 ```bash
 make run -- --output-png=curve1
 ```
-
 
 ## Examples
 

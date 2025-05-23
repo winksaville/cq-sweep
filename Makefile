@@ -6,10 +6,19 @@ RECIPE = deps/cadquery/conda
 p ?= [(0,0,0),(10,0,10)]
 t ?= [(0,0,1),(0,0,10)]
 
-.PHONY: setup build install run clean help
+.PHONY: help setup build install run clean
+
+## Show help
+help:
+	@echo "make setup                  # Init env, submodule, build, install"
+	@echo "make build                  # Rebuild cadquery from deps/"
+	@echo "make install                # Reinstall cadquery into env"
+	@echo "make run [p=...] [t=...] -- [extra args]   # Run with optional overrides"
+	@echo "make clean                  # Remove conda build cache"
 
 ## Initialize everything (submodule, environment, cadquery build/install)
 setup:
+	@echo "****** running setup..."
 	@if [ ! -d deps/cadquery/cadquery ]; then \
 		echo "Initializing cadquery submodule..."; \
 		git submodule update --init; \
@@ -20,16 +29,18 @@ setup:
 	else \
 		echo "Environment '$(ENV_NAME)' already exists."; \
 	fi
-	$(MAKE) build
-	$(MAKE) install
+	#$(MAKE) build
+	#$(MAKE) install
 
 ## Build cadquery from local source
 build:
-	conda-build $(RECIPE)
+	@echo "****** running conda-build..."
+	PACKAGE_VERSION=2.6.dev0 GIT_DESCRIBE_TAG=2.6.dev0 GIT_BUILD_STR=0 conda-build $(RECIPE) --output-folder conda-bld
 
 ## Install locally built cadquery into environment
 install:
-	micromamba install -y -n $(ENV_NAME) $(PACKAGE) --use-local
+	@echo "****** running micromamba install..."
+	micromamba install -y -n $(ENV_NAME) -c file://$(PWD)/conda-bld $(PACKAGE)
 
 ## Run cq-sweep.py with default or overridden points and tangents
 run:
@@ -38,12 +49,4 @@ run:
 ## Clean local conda build cache
 clean:
 	rm -rf ~/conda-bld
-
-## Show help
-help:
-	@echo "make setup                  # Init env, submodule, build, install"
-	@echo "make build                  # Rebuild cadquery from deps/"
-	@echo "make install                # Reinstall cadquery into env"
-	@echo "make run [p=...] [t=...] -- [extra args]   # Run with optional overrides"
-	@echo "make clean                  # Remove conda build cache"
 

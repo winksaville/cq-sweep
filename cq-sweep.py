@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # Initially based on https://github.com/CadQuery/cadquery/blob/master/examples/Ex023_Sweep.py
 import cadquery as cq
+print(f"cq.__file__={cq.__file__}")
 from cadquery.vis import show
 import sys
 import argparse
